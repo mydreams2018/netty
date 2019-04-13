@@ -3,8 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Socket</title>
+
+    <script  type="text/javascript">
+        var wsUri ="ws://localhost/ws";
+        var socket ;
+        window.onload=function(ev) {
+            if("WebSocket" in window){
+                socket = new WebSocket(wsUri);
+                socket.onopen = function(evt) {
+                    var receive =  document.getElementById("receive");
+                    receive.value = "连接开启";
+                };
+                socket.onclose = function(evt) {
+                    var receive =  document.getElementById("receive");
+                    receive.value = "连接关闭";
+                };
+                socket.onmessage = function(evt) {
+                   var receive =  document.getElementById("receive");
+                    receive.value = receive.value +"\n"+ evt.data;
+                };
+                socket.onerror = function(evt) {
+                    alert(evt.data);
+                };
+            }else{
+                alert("不支持WebSocket");
+            }
+        };
+        function clear() {
+            document.getElementById("receive").value="";
+        };
+
+        <!-- 0 表示连接尚未建立。 1 - 表示连接已建立，可以进行通信。2 - 表示连接正在进行关闭。3 - 表示连接已经关闭或者连接不能打开。 -->
+
+        function sendMsg() {
+            if ("WebSocket" in window){
+                if (socket.readyState == 1){
+                    var msg = document.getElementById("send").value;
+                    socket.send(msg);
+                }else{
+                    alert("连接没有开启");
+                }
+            }
+        };
+    </script>
 </head>
 <body>
-
+        <form onsubmit="return false;">
+            <textarea id="send" name="send_message" style="width: 400px;height: 200px"></textarea>
+            <input type="button" value="发送数据" onclick="sendMsg()">
+            <h2>服务端输出:</h2>
+            <textarea id="receive" name="receive_message" style="width: 400px;height: 200px"></textarea>
+            <input type="button" value="清空" onclick="clear()">
+        </form>
 </body>
 </html>

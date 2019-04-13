@@ -10,7 +10,7 @@ public class HealthInit extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         // 添加 自带 自定意 处理器链  IdleStateHandler 超时
-        pipeline.addLast(new IdleStateHandler(5,7,10));
+        pipeline.addLast(new IdleStateHandler(30,0,0));
         pipeline.addLast(new HealthHandler());
     }
 }

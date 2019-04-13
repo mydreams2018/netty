@@ -12,6 +12,7 @@ public class WebSockerInit extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
+        //编解码
         pipeline.addLast(new HttpServerCodec());
         //目的是支持异步大文件传输
         pipeline.addLast(new ChunkedWriteHandler());

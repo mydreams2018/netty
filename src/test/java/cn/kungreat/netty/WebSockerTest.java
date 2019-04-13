@@ -1,6 +1,5 @@
 package cn.kungreat.netty;
 
-import cn.kungreat.netty.socket.server.MyServer;
 import cn.kungreat.netty.websocker.WebSockerInit;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
