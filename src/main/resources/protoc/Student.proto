@@ -1,0 +1,13 @@
+syntax = "proto2";
+package proto.student;
+option optimize_for = SPEED;
+option java_package = "cn.kungreat.netty.domain";
+option java_outer_classname = "Student";
+
+message Person{
+        required int32   id = 1;
+        optional int32   age = 2;
+        optional string  first_name = 3;
+        optional string  last_name = 4;
+        optional bool    sex = 5;
+}
