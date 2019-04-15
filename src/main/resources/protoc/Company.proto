@@ -1,0 +1,29 @@
+syntax = "proto2";
+package proto.company;
+option optimize_for = SPEED;
+option java_package = "cn.kungreat.netty.domain";
+option java_outer_classname = "Company";
+
+message Data{
+
+      oneof Type{
+           Dept dept  = 1;
+           Employee employee = 2;
+      }
+      required int32  type_id = 3;
+}
+
+message Dept{
+      required int32   id = 1;
+      optional string  name = 2;
+      optional string  description = 3;
+}
+
+message Employee{
+    required int32   id = 1;
+    optional int32   age = 2;
+    optional string  first_name = 3;
+    optional string  last_name = 4;
+    optional bool    sex = 5;
+    optional string phone = 6;
+}

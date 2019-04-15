@@ -22,7 +22,6 @@ public class NettyProtocTest {
 
     @Test
     public void server() {
-        //  使用netty http协议 监听80端口 并返回hello world
         //负责数据读写
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         //服务类

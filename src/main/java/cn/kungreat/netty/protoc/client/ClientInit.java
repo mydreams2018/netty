@@ -1,6 +1,6 @@
 package cn.kungreat.netty.protoc.client;
 
-import cn.kungreat.netty.domain.Student;
+import cn.kungreat.netty.domain.Company;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -14,7 +14,7 @@ public class ClientInit extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new ProtobufVarint32FrameDecoder());
-        pipeline.addLast(new ProtobufDecoder(Student.Person.getDefaultInstance()));
+        pipeline.addLast(new ProtobufDecoder(Company.Data.getDefaultInstance()));
         pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
         pipeline.addLast(new ProtobufEncoder());
         pipeline.addLast(new ClientHandler());
