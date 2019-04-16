@@ -1,7 +1,6 @@
 namespace java cn.kungreat.netty.domain
 typedef i32 int
 typedef i64 long
-typedef i32 int
 
 struct User{
     1:optional string name,
