@@ -1,2 +1,5 @@
 通过 maven compile来编译  最好是专们放一个项目来编译这个 然后copy
   生成的文件到要用的项目中
+  GRPC 要求方法必须是message 类型包装的
+
+  repeated 申请类型为一个集合

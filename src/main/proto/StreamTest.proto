@@ -10,6 +10,10 @@ message Data{
       int32   age = 2;
 }
 
+message SendAge{
+    int32 age = 1;
+}
 service SendData{
-    rpc send(int32) returns (stream Data){}
+    rpc send(SendAge) returns (stream Data){}
+    rpc left(stream SendAge) returns (Data){}
 }
