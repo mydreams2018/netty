@@ -11,5 +11,5 @@ message MailData{
 }
 
 service SendMail{
-    rpc sendMail(MailData) returns (MailData){}
+    rpc Send(MailData) returns (MailData){}
 }

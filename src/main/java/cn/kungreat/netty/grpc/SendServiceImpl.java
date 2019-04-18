@@ -1,4 +1,7 @@
 package cn.kungreat.netty.grpc;
 
-public class SendServiceImpl {
+
+import cn.kungreat.netty.domain.MailData;
+
+public class SendServiceImpl  {
 }
