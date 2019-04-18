@@ -1,0 +1,15 @@
+syntax = "proto3";
+package proto.mail;
+option optimize_for = SPEED;
+option java_package = "cn.kungreat.netty.domain";
+option java_outer_classname = "Mail";
+option java_multiple_files = true;
+
+message MailData{
+      string  address = 1;
+      int32   phone = 2;
+}
+
+service SendMail{
+    rpc sendMail(MailData) returns (MailData){}
+}
