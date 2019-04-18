@@ -1,0 +1,15 @@
+syntax = "proto3";
+package proto.mail.stream;
+option optimize_for = SPEED;
+option java_package = "cn.kungreat.netty.domain.grpc.stream";
+option java_outer_classname = "StreamData";
+option java_multiple_files = true;
+
+message Data{
+      string  name = 1;
+      int32   age = 2;
+}
+
+service SendData{
+    rpc send(int32) returns (stream Data){}
+}
