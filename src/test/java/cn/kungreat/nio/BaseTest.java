@@ -28,7 +28,7 @@ public class BaseTest {
             intBuffer.put(i);
         }
         System.out.println("-----------------------");
-        // 读写切换 在NIO 中一个区域 又能读又能写 需要有状态标识
+        // 位置变更 切换 在NIO 中一个区域 又能读又能写 需要有状态标识
         intBuffer.flip();
         while(intBuffer.hasRemaining()){
             System.out.println(intBuffer.get());
