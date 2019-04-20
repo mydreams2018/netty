@@ -14,6 +14,15 @@ import java.nio.IntBuffer;
 import java.nio.channels.FileChannel;
 import java.security.SecureRandom;
 
+
+/*
+*   ByteBuffer.allocate(16);         //在jvm 空间类申请内存交互
+*   ByteBuffer.allocateDirect(16);  //在jvm 空间类申请内存交互  同时包括 (使用底层 c++ c  在公共区域也申请一个内存空间 用着交互用)
+*   二者使用起来一样   [allocateDirect 在和外界交互时被称为 zero copy ] [allocate 在和外界交互时要先把数据 cpoy 到公共区域作交互]
+*
+*/
+
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BaseTest.class )
 public class BaseTest {
@@ -58,8 +67,7 @@ public class BaseTest {
                     while (byteBuffer.hasRemaining()){
                         System.out.print((char)byteBuffer.get());
                     }
-                    System.out.println("---------------");
-                    byteBuffer.flip();
+                    byteBuffer.clear();
                     read = channel.read(byteBuffer);
                 }
             }
@@ -89,7 +97,7 @@ public class BaseTest {
                 FileChannel channel = fileOutputStream.getChannel();
 
                 ByteBuffer byteBuffer  = ByteBuffer.allocate(16);
-                byte message[] = "http://datacenter.xnjz.com:8082/new-\nxnsjy696".getBytes();
+                byte message[] = "http://datacenter.xnjz.com:8082/new-xnsjy696".getBytes();
                 for(int x = 0 ; x < message.length ; x++){
                     if(byteBuffer.hasRemaining()){
                         byteBuffer.put(message[x]);
@@ -100,7 +108,7 @@ public class BaseTest {
                     }else{
                         byteBuffer.flip();
                         channel.write(byteBuffer);
-                        byteBuffer.flip();
+                        byteBuffer.clear();
                         byteBuffer.put(message[x]);
                     }
                 }
