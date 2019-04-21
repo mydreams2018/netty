@@ -16,7 +16,7 @@ import java.nio.channels.SocketChannel;
 public class SocketTest {
     @Test
     public void server(){
-        //使用 cmd   telnet 测试
+        //使用 linux  nc 测试
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open()){
             //设置通道为阻塞等待客户端  连接完成后会关闭
             serverSocketChannel.configureBlocking(true);
@@ -25,17 +25,16 @@ public class SocketTest {
             // 等待接收
             SocketChannel accept = serverSocketChannel.accept();
             ByteBuffer byteBuffer = ByteBuffer.allocate(16);
-
             int read = accept.read(byteBuffer);
             while (read > 0){
                 byteBuffer.flip();
                 while (byteBuffer.hasRemaining()){
-                    System.out.println((char)byteBuffer.get());
+                    System.out.println(byteBuffer.get());
                 }
                 byteBuffer.clear();
                 read = accept.read(byteBuffer);
             }
-        } catch (IOException e) {
+        }catch(IOException e) {
             e.printStackTrace();
         }
     }
