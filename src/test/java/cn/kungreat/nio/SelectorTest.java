@@ -53,16 +53,24 @@ public class SelectorTest {
 
                 while(iterator.hasNext()){
                     SelectionKey next = iterator.next();
+                    iterator.remove();
                     if(next.isAcceptable()){
                         ServerSocketChannel channel =(ServerSocketChannel) next.channel();
                         SocketChannel accept = channel.accept();
                         accept.configureBlocking(false);
                         accept.register(selector,SelectionKey.OP_READ);
-                        iterator.remove();
                     }else if(next.isReadable()){
                         SocketChannel channel = (SocketChannel)next.channel();
                         ByteBuffer byteBuffer = ByteBuffer.allocate(16);
-                        int read = channel.read(byteBuffer);
+                        int read = 0;
+                        try{
+                            read =  channel.read(byteBuffer);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            byteBuffer.clear();
+                            channel.close();
+                            next.cancel();
+                        }
                         while (read > 0){
                             byteBuffer.flip();
                             while (byteBuffer.hasRemaining()){
@@ -75,9 +83,9 @@ public class SelectorTest {
                             byteBuffer.clear();
                             read = channel.read(byteBuffer);
                         }
-                        iterator.remove();
                     }
                 }
+                selectionKeys.clear();
             }
         }catch(IOException e) {
             e.printStackTrace();
@@ -97,24 +105,62 @@ public class SelectorTest {
     public void client(){
         //1. 获取socketChannel
         SocketChannel client = null;
+        Selector selector = null;
         try {
             client = SocketChannel.open();
-            //2. 创建连接
-            client.connect(new InetSocketAddress("localhost", 5001));
-            ByteBuffer buf = ByteBuffer.allocate(16);
+            selector = Selector.open();
             //3. 设置通道为非阻塞
             client.configureBlocking(false);
+            client.register(selector,SelectionKey.OP_CONNECT);
+            client.connect(new InetSocketAddress("localhost",5002));
 
-            buf.put("hard".getBytes());
+            while(selector.select() > 0){
+                Set<SelectionKey> selectionKeys = selector.selectedKeys();
+                Iterator<SelectionKey> iterator = selectionKeys.iterator();
+                while (iterator.hasNext()){
+                    SelectionKey next = iterator.next();
+                    iterator.remove();
+                    if(next.isConnectable()){
+                        SocketChannel channel = (SocketChannel)next.channel();
+                        if(channel.isConnectionPending()){
+                            channel.finishConnect();
+                        }
+                        ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+                        byteBuffer.put("all ready".getBytes());
+                        byteBuffer.flip();
+                        channel.write(byteBuffer);
+                        byteBuffer.clear();
+                        channel.register(selector,SelectionKey.OP_READ);
+                    }else if(next.isReadable()){
+                        SocketChannel channel = (SocketChannel)next.channel();
+                        ByteBuffer byteBuffer = ByteBuffer.allocate(16);
+                        int read = channel.read(byteBuffer);
+                        while(read > 0){
+                            String message = new String(byteBuffer.array(),0,read);
+                            System.out.println(message+"---");
+                            byteBuffer.clear();
+                            read = channel.read(byteBuffer);
+                        }
+                    }
+                }
+                selectionKeys.clear();
+            }
+    /*        buf.put("hard".getBytes());
             buf.flip();
-            client.write(buf);
-            buf.clear();
+            client.write(buf);*/
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
             if(client != null){
                 try {
                     client.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(selector !=null){
+                try {
+                    selector.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
