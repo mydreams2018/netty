@@ -67,9 +67,9 @@ public class SelectorTest {
                             read =  channel.read(byteBuffer);
                         }catch (Exception e){
                             e.printStackTrace();
-                            byteBuffer.clear();
                             channel.close();
                             next.cancel();
+                            continue;
                         }
                         while (read > 0){
                             byteBuffer.flip();
@@ -100,6 +100,10 @@ public class SelectorTest {
         }
 
     }
+
+    /*
+    *  client 不能正常关闭
+    */
 
     @Test
     public void client(){
