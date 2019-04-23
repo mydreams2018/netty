@@ -22,6 +22,9 @@ public class SelectorTest {
     * selector.keys()           获得当前selector   所有 SelectionKey集合
     */
 
+    // 本身提供的功能代码不健全 客户端强致关闭会倒置 本服务端出现 BUG 或者 直接挂掉
+
+
     @Test
     public void server(){
         int ports[] = new int [5];
