@@ -5,9 +5,11 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -24,18 +26,38 @@ public class SocketTest {
             serverSocketChannel.socket().bind(inetSocketAddress);
             // 等待接收
             SocketChannel accept = serverSocketChannel.accept();
+            accept.configureBlocking(true);
             ByteBuffer byteBuffer = ByteBuffer.allocate(16);
             int read = accept.read(byteBuffer);
             while (read > 0){
                 byteBuffer.flip();
                 while (byteBuffer.hasRemaining()){
-                    System.out.println(byteBuffer.get());
+                    System.out.print((char)byteBuffer.get());
                 }
                 byteBuffer.clear();
                 read = accept.read(byteBuffer);
             }
+
         }catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void client(){
+        try (SocketChannel socketChannel = SocketChannel.open();
+             FileChannel fileChannel = new FileInputStream
+                     ("C:/Users/dreaming/IdeaProjects/netty/src/main/doc/message.txt")
+                     .getChannel()){
+            socketChannel.connect(new InetSocketAddress("localhost",80));
+            socketChannel.configureBlocking(true);
+
+            //向服务器传送文件
+            long transferCount = fileChannel.transferTo(0, fileChannel.size(), socketChannel);
+            System.out.println("传送的总数量"+transferCount);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
