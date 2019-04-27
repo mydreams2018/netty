@@ -19,7 +19,6 @@ public class HealthHeart {
 
     @Test
     public void server() {
-        //  使用netty http协议 监听80端口 并返回hello world
         //负责数据读写
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         //服务类
@@ -32,7 +31,6 @@ public class HealthHeart {
         try {
             ChannelFuture bind = serverBootstrap.bind(80).sync();
             bind.channel().closeFuture().sync();
-            //上边表示一直在线等待 死循环
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {

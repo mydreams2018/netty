@@ -1,0 +1,11 @@
+new NioEventLoopGroup(int nThreads);
+可以指定 当前使用的线程数   不指定使用默认的线程数(根据当前的cpu核心数 来计算线程数量)
+    sync  表示要等到当前事件完成才往下走  不调用sync 可能会倒置当前 没有初始化
+    绑定端口完成   或者  channel 没有完全关闭 就往下走会出问题
+    ChannelFuture bind = serverBootstrap.bind(80).sync();
+            bind.channel().closeFuture().sync();
+
+            添加过滤器链路时可以传入一个 EventExecutorGroup 对象
+            这样这个Handler 将由额外的EventExecutorGroup 线程来执行
+            在大并发时防止当前 线程阻塞
+            addLast(EventExecutorGroup group, ChannelHandler... handlers)
