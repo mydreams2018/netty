@@ -1,5 +1,6 @@
 package cn.kungreat.nio;
 
+import cn.kungreat.netty.NettyApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ import java.security.SecureRandom;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BaseTest.class )
+@SpringBootTest(classes = NettyApplication.class )
 public class BaseTest {
     @Test
     public void base(){

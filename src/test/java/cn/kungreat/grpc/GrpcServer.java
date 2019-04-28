@@ -1,5 +1,6 @@
 package cn.kungreat.grpc;
 
+import cn.kungreat.netty.NettyApplication;
 import cn.kungreat.netty.domain.grpc.MailData;
 import cn.kungreat.netty.domain.grpc.SendMailGrpc;
 import cn.kungreat.netty.grpc.SendServiceImpl;
@@ -13,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = GrpcServer.class)
+@SpringBootTest(classes = NettyApplication.class)
 public class GrpcServer {
 
     @Test
@@ -46,5 +47,6 @@ public class GrpcServer {
         MailData send = sendMailBlockingStub.send(mailData);
         //输出返回信息
         System.out.println(send);
+
     }
 }

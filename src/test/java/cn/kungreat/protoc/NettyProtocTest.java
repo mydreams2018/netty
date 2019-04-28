@@ -1,5 +1,6 @@
 package cn.kungreat.protoc;
 
+import cn.kungreat.netty.NettyApplication;
 import cn.kungreat.netty.protoc.ProtocInit;
 import cn.kungreat.netty.protoc.client.ClientInit;
 import io.netty.bootstrap.Bootstrap;
@@ -17,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = NettyProtocTest.class )
+@SpringBootTest(classes = NettyApplication.class )
 public class NettyProtocTest {
 
     @Test

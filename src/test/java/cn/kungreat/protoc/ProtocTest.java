@@ -1,5 +1,6 @@
 package cn.kungreat.protoc;
 
+import cn.kungreat.netty.NettyApplication;
 import cn.kungreat.netty.domain.Student;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ProtocTest.class )
+@SpringBootTest(classes = NettyApplication.class )
 public class ProtocTest {
 
     @Test

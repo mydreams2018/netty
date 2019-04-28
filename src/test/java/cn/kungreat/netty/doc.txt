@@ -9,3 +9,11 @@ new NioEventLoopGroup(int nThreads);
             这样这个Handler 将由额外的EventExecutorGroup 线程来执行
             在大并发时防止当前 线程阻塞
             addLast(EventExecutorGroup group, ChannelHandler... handlers)
+
+    netty 处理器链路   分类二类  入站 出站  处理器
+                  入站的顶层接口是ChannelInboundHandler
+                  出站的是   ChannelOutboundHandler
+
+                  常用netty 处理器介绍
+
+            自定意编码解码器 cn.kungreat.netty.custom 编解码 类型必需要配对 不配对会丢弃掉

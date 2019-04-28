@@ -1,5 +1,6 @@
 package cn.kungreat.nio;
 
+import cn.kungreat.netty.NettyApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = SocketTest.class )
+@SpringBootTest(classes = NettyApplication.class )
 public class SocketTest {
     @Test
     public void server(){

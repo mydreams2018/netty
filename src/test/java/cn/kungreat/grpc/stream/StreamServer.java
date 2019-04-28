@@ -1,5 +1,7 @@
 package cn.kungreat.grpc.stream;
 
+import cn.kungreat.netty.NettyApplication;
+import cn.kungreat.netty.domain.grpc.MailData;
 import cn.kungreat.netty.domain.grpc.stream.Data;
 import cn.kungreat.netty.domain.grpc.stream.SendAge;
 import cn.kungreat.netty.domain.grpc.stream.SendDataGrpc;
@@ -17,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Iterator;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StreamServer.class)
+@SpringBootTest(classes = NettyApplication.class)
 public class StreamServer {
 
     @Test

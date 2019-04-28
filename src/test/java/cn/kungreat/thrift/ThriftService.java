@@ -1,5 +1,6 @@
 package cn.kungreat.thrift;
 
+import cn.kungreat.netty.NettyApplication;
 import cn.kungreat.netty.domain.User;
 import cn.kungreat.netty.domain.UserService;
 import cn.kungreat.netty.thrift.ThriftServiceImpl;
@@ -18,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ThriftService.class)
+@SpringBootTest(classes = NettyApplication.class)
 public class ThriftService {
 
     @Test
